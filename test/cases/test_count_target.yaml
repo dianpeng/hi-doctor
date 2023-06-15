@@ -1,0 +1,29 @@
+name: Sparrow.test_count_target
+comment: test https request
+
+global:
+  counter: 0
+
+# definition of variables shared by all the part of the inspection job
+local:
+  var1: $(my value)
+
+# definition of target this inspection will target at
+target:
+  format: json_v1
+  count: 10
+    
+
+# definition of the inspection task trigger
+trigger: trigger.Now()
+
+# definition of the inspection task, can be a list of tasks
+task:
+  - type: code
+    option:
+      code_block:
+        - var.SetGlobal("counter", global.counter+1)
+
+finally:
+  - assert.Yes(global.counter == 10)
+  - test.Done(info.origin, assert.OK())

@@ -1,0 +1,28 @@
+name: Sparrow.test_tcp
+comment: test tcp connection of certain port
+
+global:
+
+# definition of variables shared by all the part of the inspection job
+local:
+  var1: $(my value)
+
+# definition of target this inspection will target at
+target:
+  fetch:
+    uri: file://./test/assets/target.json
+  format: json_v1
+
+# definition of the inspection task trigger
+trigger: trigger.Now()
+
+# definition of the inspection task, can be a list of tasks
+task:
+  - type: tcp
+    check:
+      condition: true
+      lastly:
+        - log.Info("%s", PrettyStr(tcp))
+
+finally:
+  - test.Done(info.origin, assert.OK())

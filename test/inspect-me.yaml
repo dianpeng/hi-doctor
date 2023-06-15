@@ -1,0 +1,11 @@
+assets:
+  asset1: value
+  asset2: 1
+  asset3: true
+
+server_address: ":8084"
+
+service_discovery:
+  name: dir
+  dir: example/
+  cron: "@every 5s"

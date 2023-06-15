@@ -1,0 +1,13 @@
+[
+  {
+    "name": "case1",
+    "oss_path": "a/b/c/d/e/put1.json",
+    "oss_body": "${rand.Gen4K()}"
+  },
+
+  {
+    "name": "case2",
+    "oss_path": "a/b/c/d/e/put2.json",
+    "oss_body": "${rand.Gen4K()}"
+  }
+]

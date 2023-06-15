@@ -1,0 +1,31 @@
+name: Sparrow.code
+comment: test code task
+
+# definition of variables shared by all the part of the inspection job
+global:
+  var1: 1
+
+# definition of target this inspection will target at
+target:
+  fetch:
+    uri: file://./test/assets/target.json
+  format: json_v1
+
+# definition of the inspection task trigger
+trigger: trigger.Now()
+
+# definition of the inspection task, can be a list of tasks
+task:
+  - type: code 
+    option:
+      code_block:
+        - var.SetGlobal('var1', 1000)
+    check:
+      condition: assert.Yes(true)
+      lastly:
+        - log.Warn("This is warning")
+
+finally:
+  - log.Info("Global.Var1 %d", global.var1)
+  - assert.Yes(global.var1 == 1000)
+  - test.Done(info.origin, assert.OK())

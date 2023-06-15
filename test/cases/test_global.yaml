@@ -1,0 +1,40 @@
+name: Sparrow.test2
+comment: test global variable is cleared or not
+
+# definition of variables shared by all the part of the inspection job
+global:
+  var1: 1
+
+# definition of target this inspection will target at
+target:
+  fetch:
+    uri: file://./test/assets/target.json
+
+  format: json_v1
+
+# definition of the inspection task trigger
+trigger: trigger.Now()
+
+scheduler: scheduler.Parallel(1)
+
+# definition of the inspection task, can be a list of tasks
+task:
+  - type: http
+    option:
+      method: GET         # GET method
+      path: /index.html   # request path
+      header:             # header
+        user-agent: 'curl/7.52.1'
+        accept: '*/*'
+      body:               # if any, submit a body chunk for upload
+      host: www.sina.com.cn
+    check:
+      condition: true
+      lastly:
+        - var.SetGlobal('var1', 10)
+        - var.SetGlobal('var2', 20)
+
+finally:
+  - assert.Yes(global.var1 == 10)
+  - assert.Yes(global.var2 == 20)
+  - test.Done(info.origin, assert.OK())

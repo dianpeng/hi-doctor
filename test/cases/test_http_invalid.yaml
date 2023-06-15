@@ -1,0 +1,27 @@
+name: TestLocal
+comment: test local variable is cleared or not
+
+# definition of variables shared by all the part of the inspection job
+local:
+  var1: $(my value)
+
+# definition of target this inspection will target at
+target:
+  fetch:
+    uri: file://./example/target.json
+
+  format: json_v1
+
+# definition of the inspection task trigger
+trigger: trigger.Now()
+
+# definition of the inspection task, can be a list of tasks
+task:
+  - type: http
+    option:
+      host: www.sina.com.cn
+    check:
+
+finally:
+  - print.Println("Hello World")
+  - test.Done(info.origin, !assert.OK())

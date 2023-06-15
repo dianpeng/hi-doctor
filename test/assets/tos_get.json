@@ -1,0 +1,11 @@
+[
+  {
+    "name": "case1",
+    "oss_path": "a/b/c/d/e/inspection-test.json"
+  },
+
+  {
+    "name": "case2",
+    "oss_path": "a/b/c/d/e/inspection-test.json"
+  }
+]
